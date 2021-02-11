@@ -1,6 +1,28 @@
 import { Component } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
 import { Cita } from '../citas';
+import { Router } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+
+
+
+//Definicion del parametro a pasar para mostrar el registro
+//Le estamos diciendo que el ‘path’ hacia ‘user’ ahora puede llevar un id,
+//y por lo tanto debemos manejarlo en el controlador correspondiente (user.page.ts)
+const routes: Routes = [
+  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "home", loadChildren: "./home/home.module#HomePageModule" },
+  { path: "cita/:id", loadChildren: "./cita/cita.module#UserPageModule" }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
 
 @Component({
   selector: 'app-home',
@@ -18,11 +40,10 @@ export class HomePage {
 
   citaEditando: Cita;  
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(private firestoreService: FirestoreService, private router: Router) {
     //Crear una cita vacia
     this.citaEditando = {} as Cita;
     this.obtenerListaCitas();
-
   } 
   
   clicBotonInsertar() {
@@ -55,9 +76,28 @@ export class HomePage {
     this.idCitaSelec = citaSelec.id;
     this.citaEditando.nombre = citaSelec.data.nombre;
     this.citaEditando.numeroTlf = citaSelec.data.numeroTlf;
-    this.citaEditando.dia = citaSelec.data.dia;
+    this.citaEditando.dia = citaSelec.data.dia;    
+    //navegar a la cita
+    this.router.navigate(["/cita/" + this.idCitaSelec]);
+
 
   }
+
+  //NAVEGACIONES
+  navigateToCita() {
+    this.router.navigate(["/cita/nuevo"]);
+  }
+  navigateToInicio() {
+    this.router.navigate(["/home"]);
+  }
+  navigateToInformacion() {
+    this.router.navigate(["/informacion"]);
+  }
+  navigateToMapa() {
+    this.router.navigate(["/mapa"]);
+  }
+
+
 
   clicBotonBorrar() {
     this.firestoreService.borrar("citas", this.idCitaSelec).then(() => {
@@ -69,11 +109,14 @@ export class HomePage {
   }
 
   clicBotonModificar() {
-    this.firestoreService.actualizar("tareas", this.idCitaSelec, this.citaEditando).then(() => {
+    this.firestoreService.actualizar("citas", this.idCitaSelec, this.citaEditando).then(() => {
       // Actualizar la lista completa
       this.obtenerListaCitas();
       // Limpiar datos de pantalla
       this.citaEditando = {} as Cita;
     })
   }
+
+
+
 }

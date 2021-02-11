@@ -1,0 +1,44 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Información de la Cita</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+
+    <ion-card class="card">
+
+      <ion-card-header>
+        <ion-input [(ngModel)]="document.data.nombre"><strong>Nombre: </strong></ion-input>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-input hidden>Id: {{ id }}</ion-input>
+        <ion-input [(ngModel)]="document.data.numeroTlf"><b>Número Tlf: </b></ion-input>
+        <ion-input [(ngModel)]="document.data.dia"><b>Día: </b></ion-input>
+        
+      <div>
+        <ion-label>Tipo de corte:</ion-label>
+        <img [src] ="document.data.corte" width="auto" height="300px" >
+        <ion-button (click)="uploadImagePicker()">Seleccionar corte</ion-button>
+      </div>
+
+      </ion-card-content>
+
+    </ion-card>
+  
+    <!-- If para que si el elemento seleccionado sea el boton de añadir, aparezca guardar en vez de modificar -->
+    <div *ngIf ="id=='nuevo'" > <ion-button color="success" shape="round" (click)="clicBotonInsertar()">Guardar cita</ion-button></div>
+    
+  <ion-row>
+    <!-- If para que si el elemento seleccionado sea una cita, aparezca modificar en vez de guardar -->
+    <div *ngIf ="id!='nuevo'" > <ion-button color="success" shape="round" (click)="clicBotonModificar()">Modificar cita</ion-button></div>
+    <div *ngIf ="id!='nuevo'">  <ion-button  color="success" shape="round" (click)="alertaConfirmacion()">Borrar cita</ion-button> </div>
+    <!-- <div *ngIf ="id!='nuevo'">  <ion-button  color="success" shape="round" (click)="clicBotonBorrar()">Borrar cita</ion-button> </div> -->
+  </ion-row>
+
+</ion-content>

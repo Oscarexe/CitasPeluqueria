@@ -1,27 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Citas
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="citaEditando.nombre"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Número de teléfono</ion-label>
-    <ion-input [(ngModel)]="citaEditando.numeroTlf"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Día</ion-label>
-    <ion-input [(ngModel)]="citaEditando.dia"></ion-input>
-  </ion-item>
-  <ion-button (click)="clicBotonInsertar()">Añadir cita</ion-button>
-  <ion-button (click)="clicBotonBorrar()">Borrar cita</ion-button>
-  <ion-button (click)="clicBotonModificar()">Modificar tarea</ion-button>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" bottom right edge (click)="navigateToCita()" >
+    <!-- Boton para añadir una cita que llama a la funcion navigateToCita con el click -->
+    <ion-fab-button><ion-icon name="add"></ion-icon></ion-fab-button>
+  </ion-fab>
+
+  
+ 
 
   <!-- Lista de las citas que estan en la base de datos -->
   <h1>LISTA DE CITAS</h1>
@@ -41,3 +27,19 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<!-- Footer -->
+<ion-footer>
+  <ion-toolbar>
+    <div class= "menu">
+      <ion-item-divider>
+        <span class="inicio" style="text-align: center"><ion-button fill="outline" size="large" (click)="navigateToInicio()">Inicio</ion-button> </span>
+ 
+        <span class="informacion"  style="text-align: center"><ion-button fill="outline" size="large" (click)="navigateToInformacion()">Información</ion-button> </span>
+     
+        <span class="mapa" style="text-align: center"><ion-button fill="outline" size="large" (click)="navigateToMapa()">Mapa</ion-button> </span>
+      </ion-item-divider>
+
+     </div>
+  </ion-toolbar>
+</ion-footer>

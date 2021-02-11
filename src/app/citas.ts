@@ -3,6 +3,7 @@ export interface Cita {
     numeroTlf: number;
     dia:string;
     usuario: String;
+    corte: String;
 }
 
 

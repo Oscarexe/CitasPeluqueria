@@ -141,6 +141,7 @@ export class CitaPage implements OnInit {
               .then(snapshot=> {
                 snapshot.ref.getDownloadURL()
                 .then(downloadURL =>{
+                  this.document.data.corte=downloadURL;
                   //En la variable downloadURL de tiene la descarga de la imagen
                   console.log("downloadURL:" + downloadURL);
                   //Mostrar el mensaje de finalizacion de la subida

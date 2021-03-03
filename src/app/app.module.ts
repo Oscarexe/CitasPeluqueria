@@ -13,6 +13,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+
 import{ImagePicker} from '@ionic-native/image-picker/ngx';
 
 import {AngularFireStorageModule} from '@angular/fire/storage';
@@ -33,6 +36,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
     ImagePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -25,10 +25,28 @@
         <ion-label>Tipo de corte:</ion-label>
         <img [src] ="document.data.corte" width="auto" height="300px" >
         <ion-button (click)="uploadImagePicker()">Seleccionar corte</ion-button>
+        <!-- <ion-button (click)="this.firestoreService.deleteFileFromURL(document.data.corte);">Eliminar corte</ion-button> -->
       </div>
 
       </ion-card-content>
-
+      <div id="container">
+        <!-- Regular -->
+        <ion-button (click)="regularSharing()">Compartir</ion-button>
+      </div>
+      <div>
+        <!-- WhatsApp -->
+        <ion-button (click)="whatsappShare()">
+          <ion-icon  name="logo-whatsapp"></ion-icon>
+        </ion-button>
+        <!-- Facebook -->
+        <ion-button (click)="facebookShare()">
+          <ion-icon  name="logo-facebook"></ion-icon>
+        </ion-button>
+        <!-- Twitter -->
+        <ion-button (click)="twitterShare()">
+          <ion-icon  name="logo-twitter"></ion-icon>
+        </ion-button>
+      </div>
     </ion-card>
   
     <!-- If para que si el elemento seleccionado sea el boton de añadir, aparezca guardar en vez de modificar -->

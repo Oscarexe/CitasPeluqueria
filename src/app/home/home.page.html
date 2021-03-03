@@ -13,7 +13,7 @@
   <h1>LISTA DE CITAS</h1>
   <ion-list>
     <ion-item *ngFor="let documentCita of arrayColeccionCitas" (click)="selecCita(documentCita)">
-      <ion-grid>
+      <ion-grid size-xl="3" size-lg="4" size-md="5" size-sm="8" size-xs="12">
         <ion-row>
           <h2>{{documentCita.data.nombre}}</h2>
         </ion-row>
@@ -32,8 +32,8 @@
 </ion-content>
 
 <!-- Footer -->
-<ion-footer>
-  <ion-toolbar>
+<ion-footer size-xl="3" size-lg="4" size-md="5" size-sm="8" size-xs="12">
+  <ion-toolbar >
     <div class= "menu">
       <ion-item-divider>
         <span class="inicio" style="text-align: center"><ion-button fill="outline" size="large" (click)="navigateToInicio()">Inicio</ion-button> </span>

@@ -5,12 +5,16 @@ import { Router } from "@angular/router";
 import { FirestoreService } from '../firestore.service';
 import {AlertController, LoadingController, ToastController} from "@ionic/angular";
 import {ImagePicker} from '@ionic-native/image-picker/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 
 @Component({
   selector: "app-cita",
   templateUrl: "./cita.page.html",
   styleUrls: ["./cita.page.scss"]
 })
+
+
   
 export class CitaPage implements OnInit {
   //variable que almacena la cita
@@ -19,10 +23,18 @@ export class CitaPage implements OnInit {
     data: {} as Cita
   };
   id = null;
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router,public alertController: AlertController,
+  //Variable mensaje
+  mensaje: string=  "¡Hola!" +"\n"+ 
+                    "Este mensaje es un recortatorio de su cita" +"\n"+ 
+                    "Nombre :" + this.document.data.nombre + "\n" + 
+                    "Nº Teléfono :" + this.document.data.numeroTlf + "\n"+ 
+                    "Día :"+ this.document.data.dia+ "\n"+ "¡Gracias!"+ "\n"+ "https://github.com/Oscarexe/CitasPeluqueria";
+
+  constructor(private socialSharing: SocialSharing,private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router,public alertController: AlertController,
               private loadingController: LoadingController,
               private toastController: ToastController,
               private imagePicker: ImagePicker) {}
+
 
 //añadir al constructor ActivateRoute, para poder usarlo en ngOnInit, en el que obtenemos el valor de ‘id’ y lo metemos en una variable. 
 
@@ -30,6 +42,7 @@ export class CitaPage implements OnInit {
     this.id = this.activatedRoute.snapshot.paramMap.get("id");
     this.obtenerCita();
   }
+  
 
   citaEditando: Cita;
   idCitaSelect: String;
@@ -56,6 +69,9 @@ export class CitaPage implements OnInit {
             role: 'submit',
             handler: () => {
               this.clicBotonBorrar();
+
+              //llamamos al metodo que borra la foto porque siempre que borremos una cita se borrara la foto.
+              this.firestoreService.deleteFileFromURL(this.document.data.corte);
             }
           }, 
             {
@@ -175,6 +191,41 @@ export class CitaPage implements OnInit {
       }, (err) => {
           console.log(err);
       });
+      //
   }
+
+  async borrarFoto(fileURL){
+     //llamamos al metodo que borra la foto porque siempre que borremos una cita se borrara la foto.
+     this.firestoreService.deleteFileFromURL(fileURL);
+  }
+
+  //Social Share
+//Mensaje 
+
+//Regular
+  regularSharing() {
+    this.socialSharing.share(this.mensaje, null, null, null).then(() => {
+      console.log("Se ha compartido correctamente");
+    }).catch((error) => {
+      console.log("Se ha producido un error: " + error);
+    });
+  }
+ 
+  //WhatsApp
+  whatsappShare(){
+     this.socialSharing.shareViaWhatsApp(this.mensaje, null, null);
+   }
+
+   //Twitter
+   twitterShare(){
+    this.socialSharing.shareViaTwitter(this.mensaje, null, null);
+  }
+
+  //Faceboock
+  facebookShare(){
+     this.socialSharing.shareViaFacebook(this.mensaje, null, null);
+   }
+
+
 }
 
